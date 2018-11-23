@@ -7,7 +7,6 @@ let readyCallbacks = [];
 
 // method to load a single or multiple images
 function load(imageUrl){
-
   // argument is an array of image urls
   if(imageUrl instanceof Array){
     imageUrl.forEach((url) => _load(url));
@@ -32,7 +31,6 @@ function _load(url){
     // setting the entry for current image as false in cache...
     resourceCache[url] = false;
     img.src = url;
-
     
     img.onload = function(){
       // adding image to cache...
