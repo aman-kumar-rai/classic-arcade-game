@@ -94,8 +94,21 @@ function startEngine(
 ) {
 
   // creating the player and enemies and this code will later go into a function...
-  player = new Player(100, 200, 0);
-  allEnemies = [new Enemy(50, 50, 10)];
+  player = new Player(100, 250, 0);
+  allEnemies = [
+
+    // top bug row...
+    new Enemy(0, 50, 25),
+    // next bug row...
+    new Enemy(100, 100, 25),
+
+    // next bug row...
+    new Enemy(0, 150, 500),
+
+    // last bug row...
+    new Enemy(150, 200, 25)
+
+  ];
 
   // creating a canvas and getting a 2D context for it...
   canvas = document.createElement("canvas");
