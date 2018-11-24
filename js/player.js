@@ -32,6 +32,8 @@ class Player extends Entity {
 
           // increasing the score...
           // here we can write the logic for increasing the score based on the speed of the bugs...
+          score++;
+          console.log(score);
           
         }
 

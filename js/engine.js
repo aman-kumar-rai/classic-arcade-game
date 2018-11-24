@@ -11,7 +11,10 @@ let lastTime,
   rowImages,
   canvas,
   player,
-  allEnemies;
+  allEnemies,
+  lives;
+
+  window.score = 0;
 
 function gameTick() {
   // getting the time delta for the current tick...
@@ -47,7 +50,12 @@ function checkCollision() {
       player.y == enemy.y
     ) {
       player.resetPlayer();
-      console.log("collision occured");
+      console.log('Had ', lives, ' lives...');
+      lives--;
+      console.log(`Now has ${lives} lives`);
+      if(lives === 0){
+        console.log('Game over...');
+      }
     }
     // break;
   });
@@ -84,7 +92,16 @@ function render() {
     }
   }
 
+  // rendering the updated entities...
   renderEntities();
+
+  // rendering the score and health...
+  renderScoreBoard();
+}
+
+// method to render the updated scorecard...
+function renderScoreBoard(){
+  document.querySelector('#score').textContent = score;
 }
 
 // method to update the UI of all the entities...
@@ -124,6 +141,9 @@ function startEngine(
     // last bug row...
     new Enemy(150, 200, 25)
   ];
+
+  // setting the initial lives..
+  lives = 3;
 
   // adding key listener to the DOM for devices with keyboards...
   document.addEventListener("keydown", function(e) {
