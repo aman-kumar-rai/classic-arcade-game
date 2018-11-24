@@ -62,11 +62,10 @@ body{
 
 #health>li{
   font-size: 1.5em;
-  color: red;
 }
 
-.hide{
-  color: white !important;
+.alive{
+  color: red;
 }
 
 /* style for game board and its children... */

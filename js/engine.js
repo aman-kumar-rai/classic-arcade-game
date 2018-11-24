@@ -12,7 +12,11 @@ let lastTime,
   canvas,
   player,
   allEnemies,
-  lives;
+  lives,
+  livesLost = false,
+  scoreElement = document.querySelector('#score'),
+  livesElement = document.querySelector('#health')
+  ;
 
   window.score = 0;
 
@@ -50,12 +54,8 @@ function checkCollision() {
       player.y == enemy.y
     ) {
       player.resetPlayer();
-      console.log('Had ', lives, ' lives...');
+      livesLost = true;
       lives--;
-      console.log(`Now has ${lives} lives`);
-      if(lives === 0){
-        console.log('Game over...');
-      }
     }
     // break;
   });
@@ -101,7 +101,11 @@ function render() {
 
 // method to render the updated scorecard...
 function renderScoreBoard(){
-  document.querySelector('#score').textContent = score;
+  scoreElement.textContent = score;
+  if(livesLost){
+    livesElement.children[lives].classList.toggle('alive');
+    livesLost = false;
+  }
 }
 
 // method to update the UI of all the entities...
