@@ -1,8 +1,17 @@
 const { load, onReady, get } = require("./resources.js");
+const Player = require("./player.js");
+const Enemy = require("./enemy.js");
 
 // creating variables for lastTime and context...
-let lastTime, context, cellWidth, cellHeight, rows, cols, rowImages, canvas;
-
+let lastTime,
+  cellWidth,
+  cellHeight,
+  rows,
+  cols,
+  rowImages,
+  canvas,
+  player,
+  allEnemies;
 
 function gameTick() {
   // getting the time delta for the current tick...
@@ -34,7 +43,9 @@ function update(td) {
 }
 
 // method to update state of all game entities...
-function updateEntities() {
+function updateEntities(td) {
+  player.update(td);
+  allEnemies.forEach(enemy => enemy.update(td));
 }
 
 // method to update the UI for game board and all other entities...
@@ -45,7 +56,13 @@ function render() {
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      context.drawImage(get(rowImages[row]), col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+      context.drawImage(
+        get(rowImages[row]),
+        col * cellWidth,
+        row * cellHeight,
+        cellWidth,
+        cellHeight
+      );
     }
   }
 
@@ -54,6 +71,8 @@ function render() {
 
 // method to update the UI of all the entities...
 function renderEntities() {
+  player.render();
+  allEnemies.forEach(enemy => enemy.render());
 }
 
 // method with logic to restart the game...
@@ -65,19 +84,30 @@ function startOrRestartGame(imagesToLoad) {
 }
 
 // function to initialize the game board...
-function startEngine(canvasWidth, canvasHeight, rowCount, colCount, images, imagesToLoad) {
+function startEngine(
+  canvasWidth,
+  canvasHeight,
+  rowCount,
+  colCount,
+  images,
+  imagesToLoad
+) {
+
+  // creating the player and enemies and this code will later go into a function...
+  player = new Player(100, 200, 0);
+  allEnemies = [new Enemy(50, 50, 10)];
 
   // creating a canvas and getting a 2D context for it...
-  canvas = document.createElement('canvas');
-  context = canvas.getContext('2d');
+  canvas = document.createElement("canvas");
+  window.context = canvas.getContext("2d");
 
   // setting the width and height of canvas...
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
 
   // setting the height and width of a cell
-  cellWidth = canvasWidth/colCount;
-  cellHeight = canvasHeight/rowCount;
+  cellWidth = canvasWidth / colCount;
+  cellHeight = canvasHeight / rowCount;
 
   // cellWidth = 50;
   // cellHeight= 50;
@@ -96,9 +126,9 @@ function startEngine(canvasWidth, canvasHeight, rowCount, colCount, images, imag
   startOrRestartGame(imagesToLoad);
 }
 
-// exporting the context to be used in app.js
+// exporting the context...
 module.exports = {
-  context,
+  // context,
   startOrRestartGame,
   startEngine
 };
