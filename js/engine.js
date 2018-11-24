@@ -124,12 +124,13 @@ function startEngine(
         direction = "down";
         break;
     }
-    console.log(direction);
     player.handleInput(direction);
-
   });
 
   // adding click listeners for the console of devices with touch screen...
+  document.querySelector("#controls").addEventListener("click", function(e) {
+    player.handleInput(e.target.getAttribute("data-dir"));
+  });
 
   // creating a canvas and getting a 2D context for it...
   canvas = document.createElement("canvas");
