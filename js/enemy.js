@@ -8,7 +8,7 @@ class Enemy extends Entity {
 
   speedUp(value) {
     if (this.speed <= 500) {
-      this.speed += value;
+      this.speed += Math.floor(Math.random()*value)
     }
   }
 
@@ -20,7 +20,7 @@ class Enemy extends Entity {
     if (this.x > 300) {
       this.x = -50;
 
-      this.speedUp(5);
+      this.speedUp(10);
     }
     // collision detection code goes here...
   }

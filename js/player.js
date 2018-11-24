@@ -16,25 +16,24 @@ class Player extends Entity {
   }
 
   // method to handle the arrow key/console input
-  handleInput(direction) {
+  handleInput(direction, allEnemies) {
     switch (direction) {
       case "up":
-        if(this.y >= 0){
+        if (this.y >= 0) {
           this.y -= 50;
         }
         // after changing position, check if the user has reached water...
-        if(this.y == -50){
-
+        if (this.y == -50) {
           // increasing the speed of every bug...
+          allEnemies.forEach((enemy) => {
+            enemy.speedUp(20);
+          });
 
           // resetting the player position...
           this.resetPlayer();
 
           // increasing the score...
-          // here we can write the logic for increasing the score based on the speed of the bugs...
           score++;
-          console.log(score);
-          
         }
 
         break;

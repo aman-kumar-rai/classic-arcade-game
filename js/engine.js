@@ -105,6 +105,10 @@ function renderScoreBoard(){
   if(livesLost){
     livesElement.children[lives].classList.toggle('alive');
     livesLost = false;
+
+    if(lives == 0){
+      // here we will show the modal for game over...
+    }
   }
 }
 
@@ -166,12 +170,12 @@ function startEngine(
         direction = "down";
         break;
     }
-    player.handleInput(direction);
+    player.handleInput(direction, allEnemies);
   });
 
   // adding click listeners for the console of devices with touch screen...
   document.querySelector("#controls").addEventListener("click", function(e) {
-    player.handleInput(e.target.getAttribute("data-dir"));
+    player.handleInput(e.target.getAttribute("data-dir"), allEnemies);
   });
 
   // creating a canvas and getting a 2D context for it...
