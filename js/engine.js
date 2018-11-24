@@ -36,10 +36,28 @@ function init() {
   gameTick();
 }
 
+// method to check for collision
+function checkCollision() {
+  // console.log('control inside check collision');
+  // checking collision of the player with each enemy
+  allEnemies.forEach(enemy => {
+    if (
+      player.x >= enemy.x-50 &&
+      player.x <= enemy.x+50 &&
+      player.y == enemy.y
+    ) {
+      player.resetPlayer();
+      console.log("collision occured");
+    }
+    // break;
+  });
+}
+
 // method for updating game state and checking for game events...
 function update(td) {
   updateEntities(td);
   // we will check for collisions or player getting gems/heart in here...
+  checkCollision();
 }
 
 // method to update state of all game entities...
