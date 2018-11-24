@@ -6,36 +6,56 @@ class Player extends Entity {
     this.sprite = sprite;
   }
 
-  update() {
+  // we do not need this cause the player position is changed on user input...
+  update() {}
+
+  // method to reset the player location when water is reached...
+  resetPlayer() {
+    this.x = 100;
+    this.y = 250;
   }
 
-  // function to increase enemy speeds when the player reaches water...
-
-  // resetting the player position once the player reaches water...
-  // resetPlayer() {
-  //   this.startingX = 100;
-  //   this.startingY = 250;
-
-  //   this.x = this.startingX;
-  //   this.y = this.startingY;
-  // }
-
   // method to handle the arrow key/console input
-  // handleInput(direction) {
-  //   switch (direction) {
-  //     case "up":
-  //       break;
+  handleInput(direction) {
+    switch (direction) {
+      case "up":
+        if(this.y >= 0){
+          this.y -= 50;
+        }
+        // after changing position, check if the user has reached water...
+        if(this.y == -50){
 
-  //     case "down":
-  //       break;
+          // increasing the speed of every bug...
 
-  //     case "left":
-  //       break;
+          // resetting the player position...
+          this.resetPlayer();
 
-  //     case "right":
-  //       break;
-  //   }
-  // }
+          // increasing the score...
+          // here we can write the logic for increasing the score based on the speed of the bugs...
+          
+        }
+
+        break;
+
+      case "down":
+        if (this.y < 250) {
+          this.y += 50;
+        }
+        break;
+
+      case "left":
+        if (this.x > 0) {
+          this.x -= 50;
+        }
+        break;
+
+      case "right":
+        if (this.x < 250) {
+          this.x += 50;
+        }
+        break;
+    }
+  }
 }
 
 module.exports = Player;

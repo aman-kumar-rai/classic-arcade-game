@@ -92,23 +92,44 @@ function startEngine(
   images,
   imagesToLoad
 ) {
-
   // creating the player and enemies and this code will later go into a function...
   player = new Player(100, 250, 0);
   allEnemies = [
-
     // top bug row...
     new Enemy(0, 50, 25),
     // next bug row...
     new Enemy(100, 100, 25),
 
     // next bug row...
-    new Enemy(0, 150, 500),
+    new Enemy(0, 150, 25),
 
     // last bug row...
     new Enemy(150, 200, 25)
-
   ];
+
+  // adding key listener to the DOM for devices with keyboards...
+  document.addEventListener("keydown", function(e) {
+    let direction;
+    switch (e.keyCode) {
+      case 37:
+        direction = "left";
+        break;
+      case 38:
+        direction = "up";
+        break;
+      case 39:
+        direction = "right";
+        break;
+      case 40:
+        direction = "down";
+        break;
+    }
+    console.log(direction);
+    player.handleInput(direction);
+
+  });
+
+  // adding click listeners for the console of devices with touch screen...
 
   // creating a canvas and getting a 2D context for it...
   canvas = document.createElement("canvas");
