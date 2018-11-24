@@ -49,8 +49,8 @@ function checkCollision() {
   // checking collision of the player with each enemy
   allEnemies.forEach(enemy => {
     if (
-      player.x >= enemy.x-50 &&
-      player.x <= enemy.x+50 &&
+      player.x >= enemy.x-45 &&
+      player.x <= enemy.x+45 &&
       player.y == enemy.y
     ) {
       player.resetPlayer();
