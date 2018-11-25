@@ -10,10 +10,6 @@ class Entity{
   render(){
     context.drawImage(get(this.sprite), this.x, this.y, 50, 50);
   }
-
-  update(td){
-
-  }
 }
 
 module.exports = Entity;

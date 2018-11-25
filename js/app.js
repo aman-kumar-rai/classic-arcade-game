@@ -1,4 +1,4 @@
-const {startEngine, context} = require('./engine.js');
+const {startEngine} = require('./engine.js');
 
 // specifying the images to load...
 const imagesToLoad = [

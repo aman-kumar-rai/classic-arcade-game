@@ -8,7 +8,7 @@ class Enemy extends Entity {
 
   speedUp(value) {
     if (this.speed <= 500) {
-      this.speed += Math.floor(Math.random()*value)
+      this.speed += Math.floor(Math.random() * value);
     }
   }
 
@@ -16,13 +16,11 @@ class Enemy extends Entity {
     // updating the enemy x-coordinate every tick...
     this.x += this.speed * td;
 
-    // resetting enemy position and speed when the reach to the edge...
+    // resetting enemy position and speed when it reaches to the edge...
     if (this.x > 300) {
       this.x = -50;
-
       this.speedUp(10);
     }
-    // collision detection code goes here...
   }
 }
 

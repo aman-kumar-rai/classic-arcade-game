@@ -13,12 +13,11 @@ let lastTime,
   player,
   allEnemies,
   lives,
-  livesLost = false,
-  scoreElement = document.querySelector('#score'),
-  livesElement = document.querySelector('#health')
-  ;
-
-  window.score = 0;
+  livesLost,
+  scoreElement = document.querySelector("#score"),
+  livesElement = document.querySelector("#health"),
+  // stores the id returned by requestAnimationFrame()
+  requestId;
 
 function gameTick() {
   // getting the time delta for the current tick...
@@ -33,7 +32,7 @@ function gameTick() {
   lastTime = now;
 
   // asking the browser for doing the animation when possible...
-  requestAnimationFrame(gameTick);
+  requestId = requestAnimationFrame(gameTick);
 }
 
 // method to initialize the game...
@@ -44,20 +43,19 @@ function init() {
 }
 
 // method to check for collision
+// ???????????????????????????????????????????????????????????????????
+// Need to write code to fix the extra comparisions...
 function checkCollision() {
-  // console.log('control inside check collision');
-  // checking collision of the player with each enemy
   allEnemies.forEach(enemy => {
     if (
-      player.x >= enemy.x-45 &&
-      player.x <= enemy.x+45 &&
+      player.x >= enemy.x - 45 &&
+      player.x <= enemy.x + 45 &&
       player.y == enemy.y
     ) {
       player.resetPlayer();
       livesLost = true;
       lives--;
     }
-    // break;
   });
 }
 
@@ -70,7 +68,6 @@ function update(td) {
 
 // method to update state of all game entities...
 function updateEntities(td) {
-  player.update(td);
   allEnemies.forEach(enemy => enemy.update(td));
 }
 
@@ -92,22 +89,20 @@ function render() {
     }
   }
 
-  // rendering the updated entities...
   renderEntities();
-
-  // rendering the score and health...
   renderScoreBoard();
 }
 
 // method to render the updated scorecard...
-function renderScoreBoard(){
+function renderScoreBoard() {
   scoreElement.textContent = score;
-  if(livesLost){
-    livesElement.children[lives].classList.toggle('alive');
+  if (livesLost) {
+    livesElement.children[lives].classList.toggle("alive");
     livesLost = false;
 
-    if(lives == 0){
+    if (lives == 0) {
       // here we will show the modal for game over...
+      startOrRestartGame();
     }
   }
 }
@@ -122,6 +117,24 @@ function renderEntities() {
 function startOrRestartGame(imagesToLoad) {
   load(imagesToLoad);
 
+  // creating the player and enemies...
+  player = new Player(100, 250, 0);
+  allEnemies = [
+    new Enemy(0, 50, 25),
+    new Enemy(100, 100, 25),
+    new Enemy(0, 150, 25),
+    new Enemy(150, 200, 25)
+  ];
+
+  // setting the initial lives count, livesLost status and score...
+  lives = 3;
+  (livesLost = false), (window.score = 0);
+
+  // adding 'alive' class to all the life bars...
+  for(i=0; i<3; i++){
+    livesElement.children[i].classList.add('alive');
+  }
+
   // initializing the game once the images are loaded...
   onReady(init);
 }
@@ -135,24 +148,6 @@ function startEngine(
   images,
   imagesToLoad
 ) {
-  // creating the player and enemies and this code will later go into a function...
-  player = new Player(100, 250, 0);
-  allEnemies = [
-    // top bug row...
-    new Enemy(0, 50, 25),
-    // next bug row...
-    new Enemy(100, 100, 25),
-
-    // next bug row...
-    new Enemy(0, 150, 25),
-
-    // last bug row...
-    new Enemy(150, 200, 25)
-  ];
-
-  // setting the initial lives..
-  lives = 3;
-
   // adding key listener to the DOM for devices with keyboards...
   document.addEventListener("keydown", function(e) {
     let direction;
@@ -190,9 +185,6 @@ function startEngine(
   cellWidth = canvasWidth / colCount;
   cellHeight = canvasHeight / rowCount;
 
-  // cellWidth = 50;
-  // cellHeight= 50;
-
   // setting the rowCount and colCount for use in other functions...
   rows = rowCount;
   cols = colCount;
@@ -209,7 +201,5 @@ function startEngine(
 
 // exporting the context...
 module.exports = {
-  // context,
-  startOrRestartGame,
   startEngine
 };

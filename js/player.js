@@ -6,9 +6,6 @@ class Player extends Entity {
     this.sprite = sprite;
   }
 
-  // we do not need this cause the player position is changed on user input...
-  update() {}
-
   // method to reset the player location when water is reached...
   resetPlayer() {
     this.x = 100;
@@ -25,7 +22,7 @@ class Player extends Entity {
         // after changing position, check if the user has reached water...
         if (this.y == -50) {
           // increasing the speed of every bug...
-          allEnemies.forEach((enemy) => {
+          allEnemies.forEach(enemy => {
             enemy.speedUp(20);
           });
 
