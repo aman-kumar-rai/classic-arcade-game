@@ -16,6 +16,7 @@ let lastTime,
   livesLost,
   scoreElement = document.querySelector("#score"),
   livesElement = document.querySelector("#health"),
+  modalElement = document.querySelector('#modal'),
   // variable to check if the game is loaded for the first time or it is a restart...
   restart = false,
   // image array to be requested on every refresh
@@ -112,16 +113,11 @@ function renderScoreBoard() {
       // we need to stop the animation, otherwise trying to remove 'alive' class from life bar child with index -1 will cause an error and that will crash the game...
       latch = false;
       cancelAnimationFrame(requestId);
-      // setting restart to true so that init() is invoked directly...
+      // setting restart to true so that init() is invoked without onReady()...
       restart = true;
 
-      document.querySelector('#modal').style.visibility = 'visible';
-
-      // here we will show the modal for game over...
-      setTimeout(() => {
-        latch = true;
-        startOrRestartGame(imagesToReload);
-      }, 5000);
+      // making the modal visible...
+      modalElement.classList.toggle('modal-show');
     }
   }
 }
@@ -197,7 +193,26 @@ function startEngine(
     player.handleInput(e.target.getAttribute("data-dir"), allEnemies);
   });
 
+  // adding handlers for yes-button, no-button and refresh button...
+  document.querySelector('#refresh').addEventListener('click', () => {
+    restart = true;
+    latch = true;
+    startOrRestartGame(imagesToLoad);
+  });
 
+  document.querySelector('#no-btn').addEventListener('click', () => {
+    // setting restart to true so that further refreshes would work...
+    restart = true;
+    modalElement.classList.toggle('modal-show');
+  });
+
+  document.querySelector('#yes-btn').addEventListener('click', () => {
+    // closing the modal and restarting the game...
+    modalElement.classList.toggle('modal-show');
+    restart = true;
+    latch = true;
+    startOrRestartGame(imagesToLoad);
+  })
 
   // creating a canvas and getting a 2D context for it...
   canvas = document.createElement("canvas");
