@@ -16,8 +16,14 @@ let lastTime,
   livesLost,
   scoreElement = document.querySelector("#score"),
   livesElement = document.querySelector("#health"),
+  // variable to check if the game is loaded for the first time or it is a restart...
+  restart = false,
+  // image array to be requested on every refresh
+  imagesToReload,
   // stores the id returned by requestAnimationFrame()
-  requestId;
+  requestId,
+  // conditional variable to check if the next animation frame should be requested or not...
+  latch = true;
 
 function gameTick() {
   // getting the time delta for the current tick...
@@ -32,7 +38,9 @@ function gameTick() {
   lastTime = now;
 
   // asking the browser for doing the animation when possible...
-  requestId = requestAnimationFrame(gameTick);
+  if (latch) {
+    requestId = requestAnimationFrame(gameTick);
+  }
 }
 
 // method to initialize the game...
@@ -101,8 +109,19 @@ function renderScoreBoard() {
     livesLost = false;
 
     if (lives == 0) {
+      // we need to stop the animation, otherwise trying to remove 'alive' class from life bar child with index -1 will cause an error and that will crash the game...
+      latch = false;
+      cancelAnimationFrame(requestId);
+      // setting restart to true so that init() is invoked directly...
+      restart = true;
+
+      document.querySelector('#modal').style.visibility = 'visible';
+
       // here we will show the modal for game over...
-      startOrRestartGame();
+      setTimeout(() => {
+        latch = true;
+        startOrRestartGame(imagesToReload);
+      }, 5000);
     }
   }
 }
@@ -131,12 +150,17 @@ function startOrRestartGame(imagesToLoad) {
   (livesLost = false), (window.score = 0);
 
   // adding 'alive' class to all the life bars...
-  for(i=0; i<3; i++){
-    livesElement.children[i].classList.add('alive');
+  for (i = 0; i < 3; i++) {
+    livesElement.children[i].classList.add("alive");
   }
 
+  // this logic works for the first time only, the next time, we need to call init() directly...
   // initializing the game once the images are loaded...
-  onReady(init);
+  if (restart) {
+    init();
+  } else {
+    onReady(init);
+  }
 }
 
 // function to initialize the game board...
@@ -173,6 +197,8 @@ function startEngine(
     player.handleInput(e.target.getAttribute("data-dir"), allEnemies);
   });
 
+
+
   // creating a canvas and getting a 2D context for it...
   canvas = document.createElement("canvas");
   window.context = canvas.getContext("2d");
@@ -191,6 +217,9 @@ function startEngine(
 
   // setting the rowImages variable for use in other functions...
   rowImages = images;
+
+  // setting imagesToReload to imagesToLoad for game refresh scenarios...
+  imagesToReload = imagesToLoad;
 
   // rendering the game-board to the DOM...
   document.querySelector("#game-board").appendChild(canvas);
