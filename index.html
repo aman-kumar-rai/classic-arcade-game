@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Classic Arcade</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+  </head>
+  <body>
+    <div id="container">
+      <!-- Modal to be shown when the game is over -->
+      <div id="modal">
+        <div id="modal-content">
+          <p id="modal-content-message">Do you want to play again?</p>
+          <div id="modal-content-btn-container">
+            <span id="no-btn" class="modal-content-btn">No</span>
+            <span id="yes-btn" class="modal-content-btn">Yes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- container for the scorecard section -->
+      <div id="scorecard">
+        <p>score: <span id="score">0</span></p>
+        <i class='fa fa-repeat' id='refresh'></i>
+        <ul id="health">
+          <li class="fa fa-heart alive"></li>
+          <li class="fa fa-heart alive"></li>
+          <li class="fa fa-heart alive"></li>
+        </ul>
+      </div>
+
+      <!-- container for the game board -->
+      <div id="game-board"></div>
+
+      <!-- container for touch controls -->
+      <div id="controls">
+        <span class="fa fa-angle-up control" data-dir="up"></span>
+        <div id="controls-center">
+          <span class="fa fa-angle-left control" data-dir="left"></span>
+          <span class="fa fa-angle-right control" data-dir="right"></span>
+        </div>
+        <span class="fa fa-angle-down control" data-dir="down"></span>
+      </div>
+    </div>
+  <script type="text/javascript" src="app_bundle.js"></script></body>
+</html>
