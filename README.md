@@ -11,6 +11,7 @@
 A modern look at the classic arcade game!
 
 To get started, open [the GitHub pages site for this repo](https://aman-kumar-rai.github.io/classic-arcade-game/) and start playing.
+There are issues with image loading as of now, once fixed, i will update the README.
 
 * Crossing the board will earn you 1 point
 * Each collision will cost you one life bar
