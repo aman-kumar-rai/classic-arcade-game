@@ -9,7 +9,7 @@
     "build": "webpack --mode=production",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://aman-kumar-rai.github.io/classic-arcade-game",
+  "homepage": "https://am-an-kumar.github.io/classic-arcade-game",
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -17,13 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aman-kumar-rai/classic-arcade-game.git"
+    "url": "git+https://github.com/am-an-kumar/classic-arcade-game.git"
   },
   "keywords": [],
   "author": "Aman Kumar",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aman-kumar-rai/classic-arcade-game/issues"
+    "url": "https://github.com/am-an-kumar/classic-arcade-game/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
